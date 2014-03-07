@@ -56,6 +56,7 @@ begin
       TBool : write(X^.B);
       TChar : write(X^.C);
       TReal : write(X^.R);
+      TPChar : write(AnsiToUTF8(X^.PC));
     end;
     write(' ');
     DumpList(X^.next);
@@ -130,7 +131,7 @@ begin
       TBool : Q^.B := X_B;
       TChar : Q^.C := X_C;
       TReal : Q^.R := X_R;
-      //TInt : Q^.I := X_I;
+      TPChar : Q^.PC := X_PC;
     end;
 
     P := Q;

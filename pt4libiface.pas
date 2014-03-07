@@ -9,7 +9,7 @@ unit PT4LibIFace;
 interface
 
 uses
-  Classes, SysUtils, PT4Common, PT4Data;
+  Classes, SysUtils, PT4Common, PT4Data, PT4WordBase;
 
 procedure RunTask(N : integer);
 
@@ -337,8 +337,12 @@ end;
 
 //Строкового
 procedure DataS(Cmt: string; S: string; X, Y: integer); stdcall;
+var
+  Q : PChar;
 begin
-  // TODO!
+  // FIXME
+  Q := PChar(S);
+  AddToData(Q, TPChar);
 end;
 
 // Узел (PNode)
@@ -461,8 +465,12 @@ end;
 
 //Строкового
 procedure ResultS(Cmt: string; S: string; X, Y: integer); stdcall;
+var
+  Q : PChar;
 begin
-  // TODO!
+  // FIXME
+  Q := PChar(S);
+  AddToResult(Q, TPChar);
 end;
 
 // Узел (PNode)
@@ -594,67 +602,69 @@ end;
 // Количество слов
 function WordCount: integer; stdcall;
 begin
-  // TODO!
+  WordCount := RuNumWords;
 end;
 
 function EnWordCount: integer; stdcall;
 begin
-  // TODO!
+  EnWordCount := EnNumWords;
 end;
 
 // Количество предложений
 function SentenceCount: integer; stdcall;
 begin
-  // TODO!
+  SentenceCount := RuNumSent;
 end;
 
 function EnSentenceCount: integer; stdcall;
 begin
-  // TODO!
+  EnSentenceCount := EnNumSent;
 end;
 
 // Количество текстов
 function TextCount: integer; stdcall;
 begin
-  // TODO!
+  TextCount := RuNumText;
 end;
 
 function EnTextCount: integer; stdcall;
 begin
-  // TODO!
+  EnTextCount := EnNumText;
 end;
 
 // Слово-образец по номеру (нумерация от 0)
 function WordSample(N: integer): string; stdcall;
 begin
-  // TODO!
+  WordSample := RuGetWord(N);
 end;
 
 function EnWordSample(N: integer): string; stdcall;
 begin
-  // TODO!
+  EnWordSample := EnGetWord(N);
 end;
 
 // Предложение-образец
 function SentenceSample(N: integer): string; stdcall;
 begin
-  // TODO!
+  //writeln('N = ', N);
+  //SentenceSample := RuGetSentence(N);
+  inc(N);
 end;
 
 function EnSentenceSample(N: integer): string; stdcall;
 begin
-  // TODO!
+  EnSentenceSample := EnGetSentence(N);
 end;
 
 // Текст-образец
 function TextSample(N: integer): string; stdcall;
 begin
-  // TODO!
+  TextSample := RuGetText(N);
 end;
 
 function EnTextSample(N: integer): string; stdcall;
 begin
-  // TODO!
+  EnTextSample := EnGetText(N);
 end;
 
 end.

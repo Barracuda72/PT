@@ -40,7 +40,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="6">
+    <Units Count="7">
       <Unit0>
         <Filename Value="PT4pabc.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -74,6 +74,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="PT4Data"/>
       </Unit5>
+      <Unit6>
+        <Filename Value="pt4wordbase.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="PT4WordBase"/>
+      </Unit6>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

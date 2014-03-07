@@ -20,13 +20,13 @@ procedure GetN(var param: integer); stdcall;
 procedure PutN(param: integer); stdcall;
 procedure GetC(var param: char); stdcall;
 procedure PutC(param: char); stdcall;
-//procedure _GetS(param: System.Text.PCharBuilder);
-procedure _GetS(param: PChar); stdcall;
+//procedure GetS(param: System.Text.PCharBuilder);
+procedure GetS(param: PChar); stdcall;
 procedure PutS(param: PChar); stdcall;
-procedure _GetB(var param: integer); stdcall;
-procedure _PutB(param: integer); stdcall;
-procedure _GetP(var param: IntPtr); stdcall;
-procedure _PutP(param: IntPtr); stdcall;
+procedure GetB(var param: integer); stdcall;
+procedure PutB(param: integer); stdcall;
+procedure GetP(var param: IntPtr); stdcall;
+procedure PutP(param: IntPtr); stdcall;
 procedure DisposeP(sNode: IntPtr); stdcall;
 
 procedure Show(s: PChar); stdcall;
@@ -139,18 +139,22 @@ begin
   AddToCheck(param, TChar);
 end;
 
-//procedure _GetS(param: System.Text.StringBuilder);
-procedure _GetS(param: PChar); stdcall;
+//procedure GetS(param: System.Text.StringBuilder);
+procedure GetS(param: PChar); stdcall;
+var
+  Q : PDElem;
 begin
-  // TODO
+  // FIXME
+  Q := GetData;
+  param := Q^.PC;
 end;
 
 procedure PutS(param: PChar); stdcall;
 begin
-  writeln('ParamS = ',param);
+  AddToCheck(PChar(param), TPChar);
 end;
 
-procedure _GetB(var param: integer); stdcall;
+procedure GetB(var param: integer); stdcall;
 var
   Q : PDElem;
 begin
@@ -159,7 +163,7 @@ begin
   param := ord(Q^.B);
 end;
 
-procedure _PutB(param: integer); stdcall;
+procedure PutB(param: integer); stdcall;
 var
   Q : boolean;
 begin
@@ -167,11 +171,11 @@ begin
   AddToCheck(Q, TBool);
 end;
 
-procedure _GetP(var param: IntPtr); stdcall;
+procedure GetP(var param: IntPtr); stdcall;
 begin
 end;
 
-procedure _PutP(param: IntPtr); stdcall;
+procedure PutP(param: IntPtr); stdcall;
 begin
   writeln('ParamP = ',param);
 end;

@@ -4,7 +4,7 @@ library PT4pabc;
 
 uses
   Classes, Forms, Interfaces, PT4ProgIFace, pt4loadu, PT4LibIFace, PT4Common,
-  PT4Data;
+  PT4Data, PT4WordBase;
 
 exports
   // PT4ProgIFace
@@ -16,8 +16,10 @@ exports
   PutR name 'putr',
   GetN name 'getn',
   PutN name 'putn',
-  _GetB name '_getb',
-  _PutB name '_putb',
+  GetB name 'getb',
+  PutB name 'putb',
+  GetS name 'gets',
+  PutS name 'puts',
 
   // PT4LibIFace
   CreateGroup name 'creategroup',
