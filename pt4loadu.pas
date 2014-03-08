@@ -1,5 +1,9 @@
 unit pt4loadu;
 
+{
+  Форма загрузки задания
+}
+
 {$mode objfpc}{$H+}
 
 interface
@@ -20,14 +24,17 @@ type
     Button3: TBitBtn;
     Edit1: TEdit;
     Edit2: TStaticText;
+    Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
+    Label4: TLabel;
     MenuItem1: TMenuItem;
     OpenDialog1: TOpenDialog;
     PopupMenu1: TPopupMenu;
     StaticText1: TLabel;
     StaticText2: TStaticText;
     UpDown1: TUpDown;
+    procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
   private
     { private declarations }
@@ -46,12 +53,44 @@ implementation
 
 var
   Form1 : TPTULoadForm1;
+  ShallCreate : boolean;
+
+function GetName(S : string) : string;
+begin
+  GetName := Copy(S, 4, Pos('.', S)-4);
+end;
+
+function GetLibsInDir(Dir : string) : string;
+Var Info : TSearchRec;
+    LineCount : Longint;
+    Res : string;
+const
+  LineLen = 70;
+begin
+  Res := 'Доступные задания: ';
+  LineCount := 0;
+  If FindFirst (Dir + '\PT4*' + LibSuffix, faAnyFile, Info) = 0 then begin
+    Res += GetName(Info.Name);
+    while FindNext(Info) = 0 do begin
+      if (Length(Res) - (LineCount*LineLen)) > LineLen then begin
+        Res += NewLine;
+        inc(LineCount);
+      end else
+        Res += ' ';
+      Res += GetName(Info.Name);
+    end;
+  end;
+  FindClose(Info);
+  GetLibsInDir := Res;
+end;
 
 procedure ShowLoadForm;
 begin
   Application.Initialize;
   Form1 := TPTULoadForm1.Create(nil);
   Form1.Caption := 'PT4 Load';
+  Form1.Edit2.Caption := RootPath;
+  Form1.StaticText1.Caption := GetLibsInDir(RootPath);
   Form1.Show;
   Application.Run;
 end;
@@ -77,9 +116,10 @@ function PT4Load(p1, p2 : PByte; Marker : PChar; p3 : PInt;
 
 begin
   //param^ := 1;
+  ShallCreate := false;
   ShowLoadForm();
 
-  if (Form1.Edit1.Text <> '') then begin
+  if (Form1.Edit1.Text <> '') and (ShallCreate) then begin
     strcopy(Name, PChar(Form1.Edit1.Text));
     CreateTaskFile(RootPath, Name);
     strcopy(Path, PChar(RootPath + Name + '.pas'));
@@ -97,6 +137,12 @@ end;
 
 procedure TPTULoadForm1.Button2Click(Sender: TObject);
 begin
+  Application.Terminate;
+end;
+
+procedure TPTULoadForm1.Button1Click(Sender: TObject);
+begin
+  ShallCreate := true;
   Application.Terminate;
 end;
 

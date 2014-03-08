@@ -1,7 +1,7 @@
 object PTULoadForm1: TPTULoadForm1
-  Left = 376
+  Left = 484
   Height = 150
-  Top = 194
+  Top = 283
   Width = 441
   ActiveControl = Edit1
   BorderIcons = [biSystemMenu, biMinimize]
@@ -98,10 +98,10 @@ object PTULoadForm1: TPTULoadForm1
     Width = 75
     Caption = 'Загрузить'
     Default = True
-    Enabled = False
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
+    OnClick = Button1Click
     ParentFont = False
     TabOrder = 2
   end
@@ -188,6 +188,23 @@ object PTULoadForm1: TPTULoadForm1
     Visible = False
     Wrap = False
   end
+  object Label1: TLabel
+    Left = 9
+    Height = 18
+    Top = 16
+    Width = 64
+    AutoSize = False
+    Caption = 'Задание:'
+    ParentColor = False
+  end
+  object Label4: TLabel
+    Left = 9
+    Height = 14
+    Top = 47
+    Width = 45
+    Caption = 'Каталог:'
+    ParentColor = False
+  end
   object OpenDialog1: TOpenDialog
     DefaultExt = '.dpr'
     Filter = '|*.*'
@@ -196,7 +213,7 @@ object PTULoadForm1: TPTULoadForm1
     top = 96
   end
   object PopupMenu1: TPopupMenu
-    left = 48
+    left = 96
     top = 96
     object MenuItem1: TMenuItem
       Caption = 'New Item1'

@@ -17,7 +17,7 @@ uses
   {$ENDIF};
 
 type
-  TProc = procedure;// stdcall;
+  TProc = procedure;
   TProcS = procedure (S: PChar); stdcall;
 
   PInt = ^integer;
@@ -37,10 +37,12 @@ const
   RootPath = 'C:\PABCWork.NET\';
   PT4LibPath = 'C:\Program Files\PascalABC.NET\PT4\PT4pabc.dll';
   LibSuffix = '.dll';
+  NewLine = chr($0D) + chr($0A);
   {$ELSE}
   RootPath = '~/PABCWork.NET/';
   PT4LibPath = '/usr/lib/PT4/PT4pabc.so';
   LibSuffix = '.so';
+  NewLine = chr($0A);
   {$ENDIF}
 
 function isdigit(x : char) : boolean;

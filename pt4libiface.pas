@@ -361,6 +361,7 @@ end;
 procedure DataFileN(FileName: string; Y, W: integer); stdcall;
 begin
   // TODO!
+  writeln('#DataFileN: ', FileName);
 end;
 
 procedure DataFileR(FileName: string; Y, W: integer); stdcall;
@@ -489,6 +490,7 @@ end;
 procedure ResultFileN(FileName: string; Y, W: integer); stdcall;
 begin
   // TODO!
+  writeln('#ResultFileN: ', FileName);
 end;
 
 procedure ResultFileR(FileName: string; Y, W: integer); stdcall;
