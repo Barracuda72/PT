@@ -94,6 +94,7 @@ end;
 procedure DataInit;
 begin
   Data := nil;
+  Check := nil;
   Result := nil;
 end;
 

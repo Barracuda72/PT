@@ -34,6 +34,9 @@ procedure HideTask; stdcall;
 
 implementation
 
+var
+  hLib : TLibHandle;
+
 procedure StartPT(options: integer); stdcall;
 begin
   writeln('Starting PT...');
@@ -43,6 +46,7 @@ procedure FreePT; stdcall;
 begin
   writeln('Freeing PT...');
   DataFini;
+  FreeLibrary(hLib);
 end;
 
 function CheckPTF(res: PInt) : PChar; stdcall;
@@ -56,7 +60,7 @@ begin
   CheckPTF := 'OK';
 end;
 
-procedure RaisePT(s1,s2: PChar); stdcall;
+procedure RaisePT(s1, s2: PChar); stdcall;
 begin
   writeln('RaisePT: ', s1, ' - ', s2);
 end;
@@ -64,7 +68,6 @@ end;
 procedure Task(name: PChar); stdcall;
 var
   i, N : integer;
-  h : TLibHandle;
   Lib : PChar;
   activate : TProcS;
   InitTaskGroup : TProc;
@@ -77,9 +80,9 @@ begin
   if (i < length(name)) then begin
     lib := PChar(GetLibPath(Copy(name, 1, i)));
     writeln('> Loading ' + lib);
-    h := LoadLibrary(lib);
-    activate := TProcS(GetProcAddress(h, 'activate'));
-    InitTaskGroup := TProc(GetProcAddress(h, 'inittaskgroup'));
+    hLib := LoadLibrary(lib);
+    activate := TProcS(GetProcAddress(hLib, 'activate'));
+    InitTaskGroup := TProc(GetProcAddress(hLib, 'inittaskgroup'));
 
     activate(PT4LibPath);
     InitTaskGroup;
@@ -92,8 +95,6 @@ begin
 
     write('Source data: ');
     DumpData;
-
-    FreeLibrary(h);
   end;
 end;
 
@@ -146,7 +147,8 @@ var
 begin
   // FIXME
   Q := GetData;
-  param := Q^.PC;
+  StrCopy(param, Q^.PC);
+
 end;
 
 procedure PutS(param: PChar); stdcall;
@@ -177,23 +179,23 @@ end;
 
 procedure PutP(param: IntPtr); stdcall;
 begin
-  writeln('ParamP = ',param);
+  writeln('#ParamP = ',param);
 end;
 
 procedure DisposeP(sNode: IntPtr); stdcall;
 begin
-  writeln('DisposeP called');
+  writeln('#DisposeP called');
 end;
 
 
 procedure Show(s: PChar); stdcall;
 begin
-  writeln('Show: ', s);
+  writeln('Show: ', AnsiToUTF8(s));
 end;
 
 procedure HideTask; stdcall;
 begin
-  writeln('HideTask called');
+  writeln('#HideTask called');
 end;
 
 end.

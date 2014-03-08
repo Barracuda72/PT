@@ -44,32 +44,32 @@ const
 
 function RuGetWord(N : integer) : string;
 begin
-  RuGetWord := RuWords[N+1];
+  RuGetWord := UTF8ToAnsi(RuWords[N+1]);
 end;
 
 function RuGetSentence(N : integer) : string;
 begin
-  RuGetSentence := RuSents[N+1];
+  RuGetSentence := UTF8ToAnsi(RuSents[N+1]);
 end;
 
 function RuGetText(N : integer) : string;
 begin
-  RuGetText := RuTexts[N+1];
+  RuGetText := UTF8ToAnsi(RuTexts[N+1]);
 end;
 
 function EnGetWord(N : integer) : string;
 begin
-  EnGetWord := EnWords[N+1];
+  EnGetWord := UTF8ToAnsi(EnWords[N+1]);
 end;
 
 function EnGetSentence(N : integer) : string;
 begin
-  EnGetSentence := EnSents[N+1];
+  EnGetSentence := UTF8ToAnsi(EnSents[N+1]);
 end;
 
 function EnGetText(N : integer) : string;
 begin
-  EnGetText := EnTexts[N+1];
+  EnGetText := UTF8ToAnsi(EnTexts[N+1]);
 end;
 
 end.

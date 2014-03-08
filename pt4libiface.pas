@@ -146,16 +146,16 @@ function TextCount: integer; stdcall;
 function EnTextCount: integer; stdcall;
 
 // Слово-образец по номеру (нумерация от 0)
-function WordSample(N: integer): string; stdcall;
-function EnWordSample(N: integer): string; stdcall;
+function WordSample(N: integer): PChar; stdcall;
+function EnWordSample(N: integer): PChar; stdcall;
 
 // Предложение-образец
-function SentenceSample(N: integer): string; stdcall;
-function EnSentenceSample(N: integer): string; stdcall;
+function SentenceSample(N: integer): PChar; stdcall;
+function EnSentenceSample(N: integer): PChar; stdcall;
 
 // Текст-образец
-function TextSample(N: integer): string; stdcall;
-function EnTextSample(N: integer): string; stdcall;
+function TextSample(N: integer): PChar; stdcall;
+function EnTextSample(N: integer): PChar; stdcall;
 
 // Добавляет комментарий к группе заданий
 procedure CommentText(S: string); stdcall;
@@ -633,38 +633,36 @@ begin
 end;
 
 // Слово-образец по номеру (нумерация от 0)
-function WordSample(N: integer): string; stdcall;
+function WordSample(N: integer): PChar; stdcall;
 begin
-  WordSample := RuGetWord(N);
+  WordSample := PChar(RuGetWord(N));
 end;
 
-function EnWordSample(N: integer): string; stdcall;
+function EnWordSample(N: integer): PChar; stdcall;
 begin
-  EnWordSample := EnGetWord(N);
+  EnWordSample := PChar(EnGetWord(N));
 end;
 
 // Предложение-образец
-function SentenceSample(N: integer): string; stdcall;
+function SentenceSample(N: integer): PChar; stdcall;
 begin
-  //writeln('N = ', N);
-  //SentenceSample := RuGetSentence(N);
-  inc(N);
+  SentenceSample := PChar(RuGetSentence(N));
 end;
 
-function EnSentenceSample(N: integer): string; stdcall;
+function EnSentenceSample(N: integer): PChar; stdcall;
 begin
-  EnSentenceSample := EnGetSentence(N);
+  EnSentenceSample := PChar(EnGetSentence(N));
 end;
 
 // Текст-образец
-function TextSample(N: integer): string; stdcall;
+function TextSample(N: integer): PChar; stdcall;
 begin
-  TextSample := RuGetText(N);
+  TextSample := PChar(RuGetText(N));
 end;
 
-function EnTextSample(N: integer): string; stdcall;
+function EnTextSample(N: integer): PChar; stdcall;
 begin
-  EnTextSample := EnGetText(N);
+  EnTextSample := PChar(EnGetText(N));
 end;
 
 end.

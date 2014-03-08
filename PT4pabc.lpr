@@ -12,6 +12,7 @@ exports
   Task name 'task',
   FreePT name 'freept',
   CheckPTF name 'checkptf',
+  Show name 'show',
   GetR name 'getr',
   PutR name 'putr',
   GetN name 'getn',
