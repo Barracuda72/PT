@@ -39,13 +39,43 @@ procedure DumpData;
 procedure DumpResult;
 procedure DumpCheck;
 
+function CompareData : boolean;
+
 implementation
 
 var
   Data, // Исходные данные программы
-  Result,  // Необходимый результат
+  Resuld,  // Необходимый результат
   Check    // Полученный результат
     : PDElem;
+
+function CompareData : boolean;
+var
+  Res : boolean;
+  R, C : PDElem;
+begin
+  Res := true;
+  R := Resuld;
+  C := Check;
+
+  while (R <> nil) and (C <> nil) and Res do begin
+    // FIXME
+    if (R^.T <> C^.T) then
+      Res := false
+    else case R^.T of
+      TInt : Res := R^.I = C^.I;
+      TBool : Res := R^.B = C^.B;
+      TChar : Res := R^.C = C^.C;
+      TReal : Res := R^.R = C^.R;
+      TPChar : Res := CompareStr(R^.PC, C^.PC) = 0;
+    end;
+
+    R := R^.Next;
+    C := C^.Next;
+  end;
+
+  CompareData := Res and (R = C);
+end;
 
 procedure DumpList(X : PDElem);
 begin
@@ -77,7 +107,7 @@ end;
 
 procedure DumpResult;
 begin
-  DumpList(Result);
+  DumpList(Resuld);
   writeln;
 end;
 
@@ -95,13 +125,15 @@ procedure DataInit;
 begin
   Data := nil;
   Check := nil;
-  Result := nil;
+  Resuld := nil;
 end;
 
 procedure DestroyList(P : PDElem);
 begin
   if (P <> nil) then begin
     DestroyList(P^.Next);
+    if (P^.T = TPChar) then
+      StrDispose(P^.PC);
     Dispose(P);
   end;
 end;
@@ -110,7 +142,7 @@ procedure DataFini;
 begin
   DestroyList(Data);
   DestroyList(Check);
-  DestroyList(Result);
+  DestroyList(Resuld);
 end;
 
 procedure AddToList(var X; T : ElemType; var P : PDElem);
@@ -132,7 +164,7 @@ begin
       TBool : Q^.B := X_B;
       TChar : Q^.C := X_C;
       TReal : Q^.R := X_R;
-      TPChar : Q^.PC := X_PC;
+      TPChar : Q^.PC := StrNew(X_PC);
     end;
 
     P := Q;
@@ -152,7 +184,7 @@ end;
 
 procedure AddToResult(var X; T : ElemType);
 begin
-  AddToList(X, T, Result);
+  AddToList(X, T, Resuld);
 end;
 
 end.

@@ -57,7 +57,10 @@ begin
   write('Correct result : ');
   DumpResult;
   // res = 0 => Все пучком
-  CheckPTF := 'OK';
+  if CompareData() then
+    CheckPTF := 'PASSED'
+  else
+    CheckPTF := 'FAILED';
 end;
 
 procedure RaisePT(s1, s2: PChar); stdcall;
@@ -153,7 +156,7 @@ end;
 
 procedure PutS(param: PChar); stdcall;
 begin
-  AddToCheck(PChar(param), TPChar);
+  AddToCheck(param, TPChar);
 end;
 
 procedure GetB(var param: integer); stdcall;
